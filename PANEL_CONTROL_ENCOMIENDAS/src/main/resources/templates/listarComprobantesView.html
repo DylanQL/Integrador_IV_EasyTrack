@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Listado de Comprobantes</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container" style="margin-top:90px;">
+    <h1>Listado de Comprobantes</h1>
+    <div class="mb-3">
+        <a th:href="@{/formComprobante}" class="btn btn-success">Crear Comprobante</a>
+        <a th:href="@{/download/comprobantes/pdf}" class="btn btn-danger">Descargar PDF</a>
+        <a th:href="@{/download/comprobantes/xls}" class="btn btn-info">Descargar XLS</a>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Encomienda</th>
+            <th>Estado de Pago</th>
+            <th>Monto</th>
+            <th>Fecha de Pago</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comprobante : ${comprobantes}">
+            <td th:text="${comprobante.id}"></td>
+            <td th:text="${comprobante.encomienda.descripcion}"></td>
+            <td th:text="${comprobante.estadoPago}"></td>
+            <td th:text="${comprobante.monto}"></td>
+            <td th:text="${comprobante.fechaPago}"></td>
+            <td>
+                <a th:href="@{/formComprobante/{id}(id=${comprobante.id})}" class="btn btn-primary btn-sm">Editar</a>
+                <a th:href="@{/eliminarComprobante/{id}(id=${comprobante.id})}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('¿Estás seguro de eliminar este comprobante?');">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
